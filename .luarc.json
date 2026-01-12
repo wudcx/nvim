@@ -9,8 +9,8 @@
     "library": [
       "/usr/share/nvim/runtime/lua",
       "/usr/share/nvim/runtime/lua/vim",
-      "/usr/share/nvim/runtime/lua/vim/_meta"
-
+      "/usr/share/nvim/runtime/lua/vim/_meta",
+      "/home/wdc/.local/share/nvim/lazy"
     ],
     "checkThirdParty": false
   }
