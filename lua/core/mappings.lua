@@ -47,6 +47,7 @@ M.general = {
         ["<S-u>"] = { ":redo <CR>", "redo" },
         ["<leader>y"] = { "\"+y", "copy" },
         ["<leader>p"] = { "\"+p", "parse" },
+        [";"] = { ":", "enter command mode", opts = { nowait = true } }
     },
     v = {
         ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
@@ -253,5 +254,114 @@ M.blankline = {
         },
     },
 }
+
+M.whichkey = {
+    plugin = true,
+
+    n = {
+        ["<leader>wK"] = {
+            function()
+                vim.cmd "WhichKey"
+            end,
+            "which-key all keymaps",
+        },
+        ["<leader>wk"] = {
+            function()
+                local input = vim.fn.input "WhichKey: "
+                vim.cmd("WhichKey " .. input)
+            end,
+            "which-key query lookup",
+        },
+    },
+}
+
+M.comment = {
+    plugin = true,
+
+    -- toggle comment in both modes
+    n = {
+        ["<leader>/"] = {
+            function()
+                require("Comment.api").toggle.linewise.current()
+            end,
+            "toggle comment",
+        },
+    },
+
+    v = {
+        ["<leader>/"] = {
+            "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+            "toggle comment",
+        },
+    },
+}
+
+M.toggleterm = {
+  plugin = true,
+
+  t = {
+    -- terminal mode 下切换
+    ["<A-i>"] = {
+      function()
+        vim.cmd("ToggleTerm direction=float")
+      end,
+      "toggle floating term",
+    },
+
+    ["<A-h>"] = {
+      function()
+        vim.cmd("ToggleTerm direction=horizontal")
+      end,
+      "toggle horizontal term",
+    },
+
+    ["<A-v>"] = {
+      function()
+        vim.cmd("ToggleTerm direction=vertical")
+      end,
+      "toggle vertical term",
+    },
+  },
+
+  n = {
+    -- normal mode 下切换
+    ["<A-i>"] = {
+      function()
+        vim.cmd("ToggleTerm direction=float")
+      end,
+      "toggle floating term",
+    },
+
+    ["<A-h>"] = {
+      function()
+        vim.cmd("ToggleTerm direction=horizontal")
+      end,
+      "toggle horizontal term",
+    },
+
+    ["<A-v>"] = {
+      function()
+        vim.cmd("ToggleTerm direction=vertical")
+      end,
+      "toggle vertical term",
+    },
+
+    -- “新建”一个终端实例（toggleterm 默认会按 direction 复用/创建）
+    ["<leader>h"] = {
+      function()
+        vim.cmd("ToggleTerm direction=horizontal")
+      end,
+      "new horizontal term",
+    },
+
+    ["<leader>v"] = {
+      function()
+        vim.cmd("ToggleTerm direction=vertical")
+      end,
+      "new vertical term",
+    },
+  },
+}
+
 
 return M

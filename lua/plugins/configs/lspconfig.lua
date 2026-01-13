@@ -27,7 +27,7 @@ M.capabilities.textDocument.completion.completionItem = {
     },
 }
 
-local servers = { "html", "cssls", "tsserver", "clangd" }
+local servers = { "html", "cssls", "ts_ls", "clangd" }
 
 for _, lsp in ipairs(servers) do
     require("lspconfig")[lsp].setup {
