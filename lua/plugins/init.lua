@@ -1,4 +1,12 @@
 local default_plugins = {
+    -- alpha， 状态栏
+    {
+        'goolord/alpha-nvim',
+        lazy = false,
+        config = function()
+            require("plugins.configs.alpha")
+        end
+    },
     -- lualine， 状态栏
     {
         'nvim-lualine/lualine.nvim',
@@ -11,15 +19,15 @@ local default_plugins = {
     {
         'akinsho/bufferline.nvim',
         lazy = false,
-        version = "*", 
+        version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
             require("bufferline").setup()
         end
     },
 
-    { 
-        "catppuccin/nvim", 
+    {
+        "catppuccin/nvim",
         name = "catppuccin",
         lazy = false,
         priority = 1000,
@@ -194,7 +202,7 @@ local default_plugins = {
     -- AI 代码补全
     {
         "supermaven-inc/supermaven-nvim",
-        init = function ()
+        init = function()
             require("core.utils").lazy_load "supermaven-nvim"
         end,
         opts = function()
@@ -239,6 +247,17 @@ local default_plugins = {
         end,
         config = function(_, opts)
             require("toggleterm").setup(opts)
+            vim.api.nvim_create_user_command("ToggletermList", function()
+                local terms = require("toggleterm.terminal").get_all()
+                if vim.tbl_isempty(terms) then
+                    print("No terminals created yet")
+                    return
+                end
+
+                for id, term in pairs(terms) do
+                    print(string.format("Terminal %d (%s)", id, term.direction))
+                end
+            end, {})
         end,
     }
 }
