@@ -259,7 +259,22 @@ local default_plugins = {
                 end
             end, {})
         end,
-    }
+    },
+
+    {
+        "ojroques/nvim-osc52",
+        lazy = false,
+        init = function()
+            -- require("core.utils").lazy_load "nvim-osc52"
+            require("core.utils").load_mappings "osc52"
+        end,
+        opts = function()
+            return require "plugins.configs.osc52"
+        end,
+        config = function(_, opts)
+            require("osc52").setup(opts)
+        end,
+    },
 }
 
 local config = require("core.utils").load_config()

@@ -43,7 +43,7 @@ require("lspconfig").lua_ls.setup {
     settings = {
         Lua = {
             diagnostics = {
-                globals = { "vim" },
+                globals = { "nvim" },
             },
             workspace = {
                 library = {

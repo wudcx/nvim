@@ -53,7 +53,7 @@ M.general = {
         ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
         ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "move down", opts = { expr = true } },
     },
-    
+
     t = {
         ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "escape terminal mode" },
     },
@@ -228,8 +228,8 @@ M.lspconfig = {
 
 M.hop = {
     n = {
-        ["s"] = {"<cmd> HopWord<cr>", "hop word"},
-        ["ss"] = {"<cmd> HopChar1<cr>", "hop line"}
+        ["s"] = { "<cmd> HopWord<cr>", "hop word" },
+        ["ss"] = { "<cmd> HopChar1<cr>", "hop line" }
     }
 }
 
@@ -297,71 +297,102 @@ M.comment = {
 }
 
 M.toggleterm = {
-  plugin = true,
+    plugin = true,
 
-  t = {
-    -- terminal mode 下切换
-    ["<A-i>"] = {
-      function()
-        vim.cmd("ToggleTerm direction=float")
-      end,
-      "toggle floating term",
+    t = {
+        -- terminal mode 下切换
+        ["<A-i>"] = {
+            function()
+                vim.cmd("ToggleTerm direction=float")
+            end,
+            "toggle floating term",
+        },
+
+        ["<A-h>"] = {
+            function()
+                vim.cmd("ToggleTerm direction=horizontal")
+            end,
+            "toggle horizontal term",
+        },
+
+        ["<A-v>"] = {
+            function()
+                vim.cmd("ToggleTerm direction=vertical")
+            end,
+            "toggle vertical term",
+        },
     },
 
-    ["<A-h>"] = {
-      function()
-        vim.cmd("ToggleTerm direction=horizontal")
-      end,
-      "toggle horizontal term",
-    },
+    n = {
+        -- normal mode 下切换
+        ["<A-i>"] = {
+            function()
+                vim.cmd("ToggleTerm direction=float")
+            end,
+            "toggle floating term",
+        },
 
-    ["<A-v>"] = {
-      function()
-        vim.cmd("ToggleTerm direction=vertical")
-      end,
-      "toggle vertical term",
-    },
-  },
+        ["<A-h>"] = {
+            function()
+                vim.cmd("ToggleTerm direction=horizontal")
+            end,
+            "toggle horizontal term",
+        },
 
-  n = {
-    -- normal mode 下切换
-    ["<A-i>"] = {
-      function()
-        vim.cmd("ToggleTerm direction=float")
-      end,
-      "toggle floating term",
-    },
+        ["<A-v>"] = {
+            function()
+                vim.cmd("ToggleTerm direction=vertical")
+            end,
+            "toggle vertical term",
+        },
 
-    ["<A-h>"] = {
-      function()
-        vim.cmd("ToggleTerm direction=horizontal")
-      end,
-      "toggle horizontal term",
-    },
+        -- “新建”一个终端实例（toggleterm 默认会按 direction 复用/创建）
+        ["<leader>h"] = {
+            function()
+                vim.cmd("ToggleTerm direction=horizontal")
+            end,
+            "new horizontal term",
+        },
 
-    ["<A-v>"] = {
-      function()
-        vim.cmd("ToggleTerm direction=vertical")
-      end,
-      "toggle vertical term",
+        ["<leader>v"] = {
+            function()
+                vim.cmd("ToggleTerm direction=vertical")
+            end,
+            "new vertical term",
+        },
     },
-
-    -- “新建”一个终端实例（toggleterm 默认会按 direction 复用/创建）
-    ["<leader>h"] = {
-      function()
-        vim.cmd("ToggleTerm direction=horizontal")
-      end,
-      "new horizontal term",
-    },
-
-    ["<leader>v"] = {
-      function()
-        vim.cmd("ToggleTerm direction=vertical")
-      end,
-      "new vertical term",
-    },
-  },
 }
 
+M.osc52 = {
+    plugin = true,
+    n = {
+        ["y"] = {
+            function()
+                require("osc52").copy_operator()
+                return "y"
+            end,
+            "yank to system clipboard (OSC52)",
+            opts = { expr = true },
+        },
+
+        ["yy"] = {
+            function()
+                require("osc52").copy_operator()
+                return "yy"
+            end,
+            "yank line to system clipboard (OSC52)",
+            opts = { expr = true },
+        },
+    },
+
+    v = {
+        ["y"] = {
+            function()
+                require("osc52").copy_visual()
+            end,
+            "yank selection to system clipboard (OSC52)",
+        },
+    },
+}
 
 return M
