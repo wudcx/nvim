@@ -30,13 +30,13 @@ M.capabilities.textDocument.completion.completionItem = {
 local servers = { "html", "cssls", "ts_ls", "clangd" }
 
 for _, lsp in ipairs(servers) do
-    require("lspconfig")[lsp].setup {
+    vim.lsp.config(lsp, {
         on_attach = M.on_attach,
-        capabilities = M.capabilities,
-    }
+        capabilities = M.capabilities
+    })
 end
 
-require("lspconfig").lua_ls.setup {
+vim.lsp.config("lua_ls", {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
 
@@ -50,15 +50,16 @@ require("lspconfig").lua_ls.setup {
                     [vim.fn.expand "$VIMRUNTIME/lua"] = true,
                     [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
                     [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
+                    [vim.fn.stdpath "data" .. "/lazy/codecompanion.nvim/lua/codecompanion"] = true,
                 },
                 maxPreload = 100000,
                 preloadFileSize = 10000,
             },
         },
     },
-}
+})
 
-require("lspconfig").pyright.setup {
+vim.lsp.config("pyright", {
     on_attach = M.on_attach,
     settings = {
         pyright = {
@@ -73,4 +74,4 @@ require("lspconfig").pyright.setup {
             },
         },
     },
-}
+})

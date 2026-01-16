@@ -363,36 +363,38 @@ M.toggleterm = {
     },
 }
 
-M.osc52 = {
-    plugin = true,
-    n = {
-        ["y"] = {
-            function()
-                require("osc52").copy_operator()
-                return "y"
-            end,
-            "yank to system clipboard (OSC52)",
-            opts = { expr = true },
-        },
-
-        ["yy"] = {
-            function()
-                require("osc52").copy_operator()
-                return "yy"
-            end,
-            "yank line to system clipboard (OSC52)",
-            opts = { expr = true },
-        },
-    },
-
-    v = {
-        ["y"] = {
-            function()
-                require("osc52").copy_visual()
-            end,
-            "yank selection to system clipboard (OSC52)",
-        },
-    },
-}
+-- M.osc52 = {
+--     plugin = true,
+--     n = {
+--         ["y"] = {
+--             function()
+--                 require("osc52").copy_operator()
+--                 return "y"
+--             end,
+--             "yank to system clipboard (OSC52)",
+--             opts = { expr = true },
+--         },
+--
+--         ["yy"] = {
+--             function()
+--                 require("osc52").copy_operator()
+--                 return "yy"
+--             end,
+--             "yank line to system clipboard (OSC52)",
+--             opts = { expr = true },
+--         },
+--     },
+--
+--     v = {
+--         ["y"] = {
+--             function()
+--                 require("osc52").copy_visual()
+--                 return "y"
+--             end,
+--             "yank selection to system clipboard (OSC52)",
+--             opts = { expr = true },
+--         },
+--     },
+-- }
 
 return M

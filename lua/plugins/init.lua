@@ -31,19 +31,24 @@ local default_plugins = {
         name = "catppuccin",
         lazy = false,
         priority = 1000,
-        config = function()
-            require("catppuccin").setup()
+        opts = function()
+            return require "plugins.configs.catppuccin"
+        end,
+        config = function(_, opts)
+            require("catppuccin").setup(opts)
             vim.cmd.colorscheme "catppuccin"
         end
     },
 
     -- {
     --     "folke/tokyonight.nvim",
+    --     name = "tokyonight",
     --     lazy = false,
     --     config = function()
     --         vim.cmd.colorscheme "tokyonight"
     --     end
     -- },
+
     -- file managing , picker etc， 文件管理器
     {
         "nvim-tree/nvim-tree.lua",
@@ -62,7 +67,7 @@ local default_plugins = {
     -- file tree， 文件树
     {
         "nvim-telescope/telescope.nvim",
-        tag = "v0.1.9",
+        -- tag = "v0.1.9",
         cmd = "Telescope",
         init = function()
             require("core.utils").load_mappings "telescope"
@@ -83,7 +88,7 @@ local default_plugins = {
     -- tree sitter， 语法高亮
     {
         "nvim-treesitter/nvim-treesitter",
-        tag = "v0.10.0",
+        -- tag = "v0.10.0",
         init = function()
             require("core.utils").lazy_load "nvim-treesitter"
         end,
@@ -93,7 +98,7 @@ local default_plugins = {
             return require "plugins.configs.treesitter"
         end,
         config = function(_, opts)
-            require("nvim-treesitter.configs").setup(opts)
+            require("nvim-treesitter").setup(opts)
         end,
     },
     -- lsp stuff， 安装语言服务器、调试器和其他开发工具
@@ -120,7 +125,7 @@ local default_plugins = {
         init = function()
             require("core.utils").lazy_load "nvim-lspconfig"
         end,
-        tag = "v2.3.0",
+        -- tag = "v2.3.0",
         config = function()
             require "plugins.configs.lspconfig"
         end,
@@ -261,20 +266,39 @@ local default_plugins = {
         end,
     },
 
+    -- {
+    --     "ojroques/nvim-osc52",
+    --     lazy = false,
+    --     init = function()
+    --         -- require("core.utils").lazy_load "nvim-osc52"
+    --         require("core.utils").load_mappings "osc52"
+    --     end,
+    --     opts = function()
+    --         return require "plugins.configs.osc52"
+    --     end,
+    --     config = function(_, opts)
+    --         require("osc52").setup(opts)
+    --     end,
+    -- },
     {
-        "ojroques/nvim-osc52",
+        "olimorris/codecompanion.nvim",
+        -- cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionInline" }, -- 延迟加载
         lazy = false,
-        init = function()
-            -- require("core.utils").lazy_load "nvim-osc52"
-            require("core.utils").load_mappings "osc52"
-        end,
+        -- init = function()
+        --     require("core.utils").lazy_load "codecompanion.nvim"
+        -- end,
+
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
         opts = function()
-            return require "plugins.configs.osc52"
+            return require "plugins.configs.codecompanion"
         end,
         config = function(_, opts)
-            require("osc52").setup(opts)
+            require("codecompanion").setup(opts)
         end,
-    },
+    }
 }
 
 local config = require("core.utils").load_config()
