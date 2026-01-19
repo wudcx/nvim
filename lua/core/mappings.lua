@@ -151,12 +151,6 @@ M.lspconfig = {
             "lsp definition type",
         },
 
-        ["<leader>ra"] = {
-            function()
-                require("nvchad_ui.renamer").open()
-            end,
-            "lsp rename",
-        },
 
         ["<leader>ca"] = {
             function()
@@ -177,20 +171,6 @@ M.lspconfig = {
                 vim.diagnostic.open_float { border = "rounded" }
             end,
             "floating diagnostic",
-        },
-
-        ["[d"] = {
-            function()
-                vim.diagnostic.goto_prev()
-            end,
-            "goto prev",
-        },
-
-        ["]d"] = {
-            function()
-                vim.diagnostic.goto_next()
-            end,
-            "goto_next",
         },
 
         ["<leader>q"] = {

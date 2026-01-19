@@ -298,7 +298,22 @@ local default_plugins = {
         config = function(_, opts)
             require("codecompanion").setup(opts)
         end,
-    }
+    },
+
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown", "codecompanion" },
+    },
+
+    {
+        "echasnovski/mini.diff",
+        config = function()
+            local diff = require("mini.diff")
+            diff.setup({
+                source = diff.gen_source.none(),
+            })
+        end,
+    },
 }
 
 local config = require("core.utils").load_config()
