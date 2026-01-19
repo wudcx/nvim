@@ -38,7 +38,6 @@ M.general = {
         ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
         ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
         ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "move down", opts = { expr = true } },
-        ["<A-o>"] = { ":ClangdSwitchSourceHeader <CR>", "switch source header" },
         -- new buffer
         ["<leader>b"] = { "<cmd> enew <CR>", "new buffer" },
         ["<leader>ch"] = { "<cmd> NvCheatsheet <CR>", "Mapping cheatsheet" },
@@ -117,6 +116,11 @@ M.lspconfig = {
                 vim.lsp.buf.definition()
             end,
             "lsp definition",
+        },
+
+        ["<A-o>"] = {
+            "<cmd> ClangdSwitchSourceHeader <CR>",
+            "switch source header" 
         },
 
         ["K"] = {

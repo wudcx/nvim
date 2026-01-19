@@ -27,14 +27,23 @@ M.capabilities.textDocument.completion.completionItem = {
     },
 }
 
-local servers = { "html", "cssls", "ts_ls", "clangd" }
+local servers = { "html", "cssls", "ts_ls", }
 
 for _, lsp in ipairs(servers) do
     vim.lsp.config(lsp, {
         on_attach = M.on_attach,
         capabilities = M.capabilities
     })
+    vim.lsp.enable(lsp)
 end
+
+vim.lsp.config("clangd", {
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
+    cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
+})
+
+vim.lsp.enable "clangd"
 
 vim.lsp.config("lua_ls", {
     on_attach = M.on_attach,
@@ -59,6 +68,8 @@ vim.lsp.config("lua_ls", {
     },
 })
 
+vim.lsp.enable "lua_ls"
+
 vim.lsp.config("pyright", {
     on_attach = M.on_attach,
     settings = {
@@ -75,3 +86,36 @@ vim.lsp.config("pyright", {
         },
     },
 })
+vim.lsp.enable("pyright")
+
+local function switch_source_header()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local uri = vim.uri_from_bufnr(bufnr)
+
+  for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    if client.name == "clangd" then
+      client.request(
+        "textDocument/switchSourceHeader",
+        { uri = uri },
+        function(err, result)
+          if err then
+            vim.notify(err.message or tostring(err), vim.log.levels.ERROR)
+            return
+          end
+          if result then
+            vim.cmd("edit " .. vim.uri_to_fname(result))
+          else
+            vim.notify("No corresponding file", vim.log.levels.INFO)
+          end
+        end,
+        bufnr
+      )
+      return
+    end
+  end
+
+  vim.notify("clangd not attached", vim.log.levels.WARN)
+end
+
+vim.api.nvim_create_user_command("ClangdSwitchSourceHeader", switch_source_header, {})
+
