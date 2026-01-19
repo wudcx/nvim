@@ -282,7 +282,7 @@ local default_plugins = {
     -- },
     {
         "olimorris/codecompanion.nvim",
-        -- cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionInline" }, -- 延迟加载
+        -- cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionEdit" }, -- 延迟加载
         lazy = false,
         -- init = function()
         --     require("core.utils").lazy_load "codecompanion.nvim"

@@ -40,7 +40,7 @@ end
 vim.lsp.config("clangd", {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
-    cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
+    -- cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
 })
 
 vim.lsp.enable "clangd"
