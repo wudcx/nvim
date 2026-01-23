@@ -285,9 +285,9 @@ local default_plugins = {
         "olimorris/codecompanion.nvim",
         -- cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionEdit" }, -- 延迟加载
         lazy = false,
-        -- init = function()
-        --     require("core.utils").lazy_load "codecompanion.nvim"
-        -- end,
+        init = function()
+            require("core.utils").load_mappings("codecompanion")
+        end,
 
         dependencies = {
             "nvim-lua/plenary.nvim",

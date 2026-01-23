@@ -124,7 +124,7 @@ M.lspconfig = {
 
         ["<A-o>"] = {
             "<cmd> ClangdSwitchSourceHeader <CR>",
-            "switch source header" 
+            "switch source header"
         },
 
         ["K"] = {
@@ -414,7 +414,7 @@ M.gitsigns = {
                 vim.schedule(function()
                     require("gitsigns").prev_hunk()
                 end)
-require("core")
+                require("core")
                 return "<Ignore>"
             end,
             "Jump to prev hunk",
@@ -450,5 +450,29 @@ require("core")
             "Toggle deleted",
         },
     },
+}
+
+M.codecompanion = {
+    plugin = true,
+    n = {
+        ["<leader>cc"] = {
+            "<cmd> CodeCompanion<CR>",
+            "code companion",
+        },
+        ["<leader>ch"] = {
+            "<cmd> CodeCompanionChat<CR>",
+            "code companion chat",
+        },
+        ["<leader>ca"] = {
+            "<cmd> CodeCompanionActions<CR>",
+            "code companion edit",
+        },
+    },
+    v = {
+        ["<leader>cc"] = {
+            "<cmd> CodeCompanion<CR>",
+            "code companion",
+        },
+    }
 }
 return M
