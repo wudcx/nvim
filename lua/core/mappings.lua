@@ -475,4 +475,28 @@ M.codecompanion = {
         },
     }
 }
+
+M.opencode = {
+    plugin = true,
+    n = {
+        ["<leader>ca"] = {
+            function ()
+                require("opencode").ask("@this: ", {submit = true})
+            end,
+            "Ask opencode...",
+        },
+        ["<leader>cs"] = {
+            function ()
+                require("opencode").select()
+            end,
+            "Execute opencode action...",
+        },
+        ["<leader>ct"] = {
+            function ()
+                require("opencode").toggle()
+            end,
+            "Execute opencode toggle...",
+        },
+    }
+}
 return M

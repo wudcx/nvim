@@ -60,6 +60,8 @@ vim.lsp.config("lua_ls", {
                     [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
                     [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
                     [vim.fn.stdpath "data" .. "/lazy/codecompanion.nvim/lua/codecompanion"] = true,
+                    [vim.fn.stdpath "data" .. "/lazy/telescope.nvim/lua/telescope"] = true,
+                    [vim.fn.stdpath "data" .. "/lazy/telescope.nvim/lua/telescope/pickers"] = true,
                 },
                 maxPreload = 100000,
                 preloadFileSize = 10000,

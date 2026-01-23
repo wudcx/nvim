@@ -10,6 +10,9 @@ local options = {
             "--column",
             "--smart-case",
         },
+        preview = {
+            focusable = true,
+        },
         prompt_prefix = "   ",
         selection_caret = "  ",
         entry_prefix = "  ",
