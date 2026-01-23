@@ -26,28 +26,29 @@ local default_plugins = {
         end
     },
 
-    {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        lazy = false,
-        priority = 1000,
-        opts = function()
-            return require "plugins.configs.catppuccin"
-        end,
-        config = function(_, opts)
-            require("catppuccin").setup(opts)
-            vim.cmd.colorscheme "catppuccin"
-        end
-    },
-
     -- {
-    --     "folke/tokyonight.nvim",
-    --     name = "tokyonight",
+    --     "catppuccin/nvim",
+    --     name = "catppuccin",
     --     lazy = false,
-    --     config = function()
-    --         vim.cmd.colorscheme "tokyonight"
+    --     priority = 1000,
+    --     opts = function()
+    --         return require "plugins.configs.catppuccin"
+    --     end,
+    --     config = function(_, opts)
+    --         require("catppuccin").setup(opts)
+    --         vim.cmd.colorscheme "catppuccin"
     --     end
     -- },
+
+    {
+        "folke/tokyonight.nvim",
+        name = "tokyonight",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.cmd.colorscheme "tokyonight"
+        end
+    },
 
     -- file managing , picker etc， 文件管理器
     {
@@ -153,7 +154,7 @@ local default_plugins = {
             return require("plugins.configs.blankline")
         end,
         config = function(_, opts)
-            require("ibl").setup()
+            require("ibl").setup(opts)
         end,
     },
 
@@ -312,6 +313,34 @@ local default_plugins = {
             diff.setup({
                 source = diff.gen_source.none(),
             })
+        end,
+    },
+
+    {
+        "lewis6991/gitsigns.nvim",
+        lazy = false,
+        ft = { "gitcommit", "diff" },
+        init = function()
+            -- load gitsigns only when a git file is opened
+            vim.api.nvim_create_autocmd({ "BufRead" }, {
+                group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
+                callback = function()
+                    vim.fn.system("git -C " .. '"' .. vim.fn.expand "%:p:h" .. '"' .. " rev-parse")
+                    if vim.v.shell_error == 0 then
+                        vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
+                        vim.schedule(function()
+                            require("lazy").load { plugins = { "gitsigns.nvim" } }
+                        end)
+                    end
+                end,
+            })
+
+        end,
+        opts = function()
+            return require("plugins.configs.gitsigns")
+        end,
+        config = function(_, opts)
+            require("gitsigns").setup(opts)
         end,
     },
 }

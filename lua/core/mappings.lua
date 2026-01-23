@@ -129,7 +129,9 @@ M.lspconfig = {
 
         ["K"] = {
             function()
-                vim.lsp.buf.hover()
+                vim.lsp.buf.hover({
+                    border = "rounded",
+                })
             end,
             "lsp hover",
         },
@@ -351,38 +353,102 @@ M.toggleterm = {
     },
 }
 
--- M.osc52 = {
---     plugin = true,
---     n = {
---         ["y"] = {
---             function()
---                 require("osc52").copy_operator()
---                 return "y"
---             end,
---             "yank to system clipboard (OSC52)",
---             opts = { expr = true },
---         },
---
---         ["yy"] = {
---             function()
---                 require("osc52").copy_operator()
---                 return "yy"
---             end,
---             "yank line to system clipboard (OSC52)",
---             opts = { expr = true },
---         },
---     },
---
---     v = {
---         ["y"] = {
---             function()
---                 require("osc52").copy_visual()
---                 return "y"
---             end,
---             "yank selection to system clipboard (OSC52)",
---             opts = { expr = true },
---         },
---     },
--- }
+M.osc52 = {
+    plugin = true,
+    n = {
+        ["y"] = {
+            function()
+                require("osc52").copy_operator()
+                return "y"
+            end,
+            "yank to system clipboard (OSC52)",
+            opts = { expr = true },
+        },
 
+        ["yy"] = {
+            function()
+                require("osc52").copy_operator()
+                return "yy"
+            end,
+            "yank line to system clipboard (OSC52)",
+            opts = { expr = true },
+        },
+    },
+
+    v = {
+        ["y"] = {
+            function()
+                require("osc52").copy_visual()
+                return "y"
+            end,
+            "yank selection to system clipboard (OSC52)",
+            opts = { expr = true },
+        },
+    },
+}
+
+M.gitsigns = {
+    plugin = true,
+
+    n = {
+        -- Navigation through hunks
+        ["]c"] = {
+            function()
+                if vim.wo.diff then
+                    return "]c"
+                end
+                vim.schedule(function()
+                    require("gitsigns").next_hunk()
+                end)
+                return "<Ignore>"
+            end,
+            "Jump to next hunk",
+            opts = { expr = true },
+        },
+
+        ["[c"] = {
+            function()
+                if vim.wo.diff then
+                    return "[c"
+                end
+                vim.schedule(function()
+                    require("gitsigns").prev_hunk()
+                end)
+require("core")
+                return "<Ignore>"
+            end,
+            "Jump to prev hunk",
+            opts = { expr = true },
+        },
+
+        -- Actions
+        ["<leader>rh"] = {
+            function()
+                require("gitsigns").reset_hunk()
+            end,
+            "Reset hunk",
+        },
+
+        ["<leader>ph"] = {
+            function()
+                require("gitsigns").preview_hunk()
+            end,
+            "Preview hunk",
+        },
+
+        ["<leader>gb"] = {
+            function()
+                package.loaded.gitsigns.blame_line()
+            end,
+            "Blame line",
+        },
+
+        ["<leader>td"] = {
+            function()
+                require("gitsigns").toggle_deleted()
+            end,
+            "Toggle deleted",
+        },
+    },
+}
 return M
