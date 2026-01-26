@@ -27,7 +27,7 @@ M.capabilities.textDocument.completion.completionItem = {
     },
 }
 
-local servers = { "html", "cssls", "ts_ls", }
+local servers = { "html", "cssls" }
 
 for _, lsp in ipairs(servers) do
     vim.lsp.config(lsp, {
@@ -36,6 +36,31 @@ for _, lsp in ipairs(servers) do
     })
     vim.lsp.enable(lsp)
 end
+
+-- TypeScript / JavaScript
+vim.lsp.config("vtsls", {
+  on_attach = M.on_attach,
+  capabilities = M.capabilities,
+  filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+  root_dir = function(fname)
+    return vim.fs.dirname(vim.fs.find({ 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' }, { upward = true, path = fname })[1])
+  end,
+})
+
+vim.lsp.enable("vtsls")
+
+
+-- Vue (Volar)
+vim.lsp.config("vue_ls", {
+  filetypes = { "vue" },
+  on_attach = M.on_attach,
+  capabilities = M.capabilities,
+  root_dir = function(fname)
+    return vim.fs.dirname(vim.fs.find({ 'package.json', 'vue.config.js', 'vite.config.js', '.git' }, { upward = true, path = fname })[1])
+  end,
+})
+
+vim.lsp.enable("vue_ls")
 
 vim.lsp.config("clangd", {
     on_attach = M.on_attach,

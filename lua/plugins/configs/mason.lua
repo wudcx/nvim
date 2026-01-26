@@ -7,6 +7,7 @@ local options = {
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
+    "vue-language-server",
     "deno",
     "prettier",
 

@@ -479,19 +479,19 @@ M.codecompanion = {
 M.opencode = {
     plugin = true,
     n = {
-        ["<leader>ca"] = {
+        ["<leader>oa"] = {
             function ()
                 require("opencode").ask("@this: ", {submit = true})
             end,
             "Ask opencode...",
         },
-        ["<leader>cs"] = {
+        ["<leader>os"] = {
             function ()
                 require("opencode").select()
             end,
             "Execute opencode action...",
         },
-        ["<leader>ct"] = {
+        ["<leader>ot"] = {
             function ()
                 require("opencode").toggle()
             end,

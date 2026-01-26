@@ -71,3 +71,43 @@ vim.diagnostic.config {
 --         ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
 --     },
 -- }
+
+local osc52 = require("vim.ui.clipboard.osc52")
+
+vim.g.clipboard = {
+  name = "OSC52-safe",
+
+  -- 只用 OSC52 copy
+  copy = {
+    ["+"] = osc52.copy("+", { silent = true }),
+    ["*"] = osc52.copy("*", { silent = true }),
+  },
+
+  -- paste：直接走默认（不走 OSC52）
+  paste = {
+    ["+"] = function()
+      return vim.fn.getreg("+"), vim.fn.getregtype("+")
+    end,
+    ["*"] = function()
+      return vim.fn.getreg("*"), vim.fn.getregtype("*")
+    end,
+  },
+}
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    if vim.bo.buftype ~= "" then
+      return
+    end
+
+    local view = vim.fn.winsaveview()
+
+    -- 删除行尾空白
+    vim.cmd([[%s/\s\+$//e]])
+
+    -- 保证文件末尾只有一个换行
+    vim.cmd([[%s/\(\n\)\+\%$//e]])
+
+    vim.fn.winrestview(view)
+  end,
+})

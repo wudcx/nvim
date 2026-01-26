@@ -281,25 +281,25 @@ local default_plugins = {
     --         require("osc52").setup(opts)
     --     end,
     -- },
-    -- {
-    --     "olimorris/codecompanion.nvim",
-    --     -- cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionEdit" }, -- 延迟加载
-    --     lazy = false,
-    --     init = function()
-    --         require("core.utils").load_mappings("codecompanion")
-    --     end,
-    --
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim",
-    --         "nvim-treesitter/nvim-treesitter",
-    --     },
-    --     opts = function()
-    --         return require "plugins.configs.codecompanion"
-    --     end,
-    --     config = function(_, opts)
-    --         require("codecompanion").setup(opts)
-    --     end,
-    -- },
+    {
+        "olimorris/codecompanion.nvim",
+        -- cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionEdit" }, -- 延迟加载
+        lazy = false,
+        init = function()
+            require("core.utils").load_mappings("codecompanion")
+        end,
+
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = function()
+            return require "plugins.configs.codecompanion"
+        end,
+        config = function(_, opts)
+            require("codecompanion").setup(opts)
+        end,
+    },
 
     {
         "MeanderingProgrammer/render-markdown.nvim",
@@ -343,25 +343,25 @@ local default_plugins = {
         end,
     },
 
-    {
-        "NickvanDyke/opencode.nvim",
-        lazy = false,
-        init = function()
-            require("core.utils").load_mappings "opencode"
-        end,
-        dependencies = {
-            {
-                "folke/snacks.nvim",
-                opts = { input = {}, picker = {}, terminal = {} }
-            },
-        },
-        config = function()
-            vim.g.opencode_opts = {
-                bin = "/home/wdc/.opencode/bin/opencode"
-            }
-            vim.o.autoread = true
-        end,
-    }
+    -- {
+    --     "NickvanDyke/opencode.nvim",
+    --     lazy = false,
+    --     init = function()
+    --         require("core.utils").load_mappings "opencode"
+    --     end,
+    --     dependencies = {
+    --         {
+    --             "folke/snacks.nvim",
+    --             opts = { input = {}, picker = {}, terminal = {} }
+    --         },
+    --     },
+    --     config = function()
+    --         vim.g.opencode_opts = {
+    --             bin = "/home/wdc/.opencode/bin/opencode"
+    --         }
+    --         vim.o.autoread = true
+    --     end,
+    -- }
 }
 
 local config = require("core.utils").load_config()
