@@ -37,30 +37,39 @@ for _, lsp in ipairs(servers) do
     vim.lsp.enable(lsp)
 end
 
--- TypeScript / JavaScript
-vim.lsp.config("vtsls", {
-  on_attach = M.on_attach,
-  capabilities = M.capabilities,
-  filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-  root_dir = function(fname)
-    return vim.fs.dirname(vim.fs.find({ 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' }, { upward = true, path = fname })[1])
-  end,
-})
+local vue_language_server_path = vim.fn.stdpath('data') ..
+    "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+local tsserver_filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }
+local vue_plugin = {
+    name = '@vue/typescript-plugin',
+    location = vue_language_server_path,
+    languages = { 'vue' },
+    configNamespace = 'typescript',
+}
+local vtsls_config = {
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
+    settings = {
+        vtsls = {
+            tsserver = {
+                globalPlugins = {
+                    vue_plugin,
+                },
+            },
+        },
+    },
+    filetypes = tsserver_filetypes,
+}
 
-vim.lsp.enable("vtsls")
-
-
--- Vue (Volar)
-vim.lsp.config("vue_ls", {
-  filetypes = { "vue" },
-  on_attach = M.on_attach,
-  capabilities = M.capabilities,
-  root_dir = function(fname)
-    return vim.fs.dirname(vim.fs.find({ 'package.json', 'vue.config.js', 'vite.config.js', '.git' }, { upward = true, path = fname })[1])
-  end,
-})
-
-vim.lsp.enable("vue_ls")
+-- If you are on most recent `nvim-lspconfig`
+local vue_ls_config = {
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
+}
+-- nvim 0.11 or above
+vim.lsp.config('vtsls', vtsls_config)
+vim.lsp.config('vue_ls', vue_ls_config)
+vim.lsp.enable({ 'vtsls', 'vue_ls' }) -- If using `ts_ls` replace `vtsls` to `ts_ls`
 
 vim.lsp.config("clangd", {
     on_attach = M.on_attach,
@@ -116,33 +125,32 @@ vim.lsp.config("pyright", {
 vim.lsp.enable("pyright")
 
 local function switch_source_header()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local uri = vim.uri_from_bufnr(bufnr)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local uri = vim.uri_from_bufnr(bufnr)
 
-  for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-    if client.name == "clangd" then
-      client.request(
-        "textDocument/switchSourceHeader",
-        { uri = uri },
-        function(err, result)
-          if err then
-            vim.notify(err.message or tostring(err), vim.log.levels.ERROR)
+    for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+        if client.name == "clangd" then
+            client.request(
+                "textDocument/switchSourceHeader",
+                { uri = uri },
+                function(err, result)
+                    if err then
+                        vim.notify(err.message or tostring(err), vim.log.levels.ERROR)
+                        return
+                    end
+                    if result then
+                        vim.cmd("edit " .. vim.uri_to_fname(result))
+                    else
+                        vim.notify("No corresponding file", vim.log.levels.INFO)
+                    end
+                end,
+                bufnr
+            )
             return
-          end
-          if result then
-            vim.cmd("edit " .. vim.uri_to_fname(result))
-          else
-            vim.notify("No corresponding file", vim.log.levels.INFO)
-          end
-        end,
-        bufnr
-      )
-      return
+        end
     end
-  end
 
-  vim.notify("clangd not attached", vim.log.levels.WARN)
+    vim.notify("clangd not attached", vim.log.levels.WARN)
 end
 
 vim.api.nvim_create_user_command("ClangdSwitchSourceHeader", switch_source_header, {})
-
