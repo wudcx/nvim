@@ -113,38 +113,47 @@ vim.lsp.config("lua_ls", {
 
 vim.lsp.enable "lua_ls"
 
+-- 配置 pyright Python LSP 服务器
 vim.lsp.config("pyright", {
-    on_attach = M.on_attach,
+    on_attach = M.on_attach,  -- 使用共享的 on_attach 函数
     settings = {
         pyright = {
-            autoImportCompletion = true,
+            autoImportCompletion = true,  -- 自动导入补全
         },
         python = {
             analysis = {
-                autoSearchPaths = true,
-                iagnosticMode = 'openFilesOnly',
-                useLibraryCodeForTypes = true,
-                typeCheckingMode = 'off'
+                autoSearchPaths = true,         -- 自动搜索路径
+                diagnosticMode = 'openFilesOnly',  -- 仅对打开的文件进行诊断
+                useLibraryCodeForTypes = true,  -- 使用库代码进行类型推断
+                typeCheckingMode = 'off'        -- 关闭类型检查
             },
         },
     },
 })
+-- 启用 pyright LSP 服务器
 vim.lsp.enable("pyright")
 
+-- 切换 C/C++ 源文件和头文件的函数
 local function switch_source_header()
+    -- 获取当前缓冲区编号和 URI
     local bufnr = vim.api.nvim_get_current_buf()
     local uri = vim.uri_from_bufnr(bufnr)
 
+    -- 遍历附加到当前缓冲区的 LSP 客户端
     for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+        -- 只处理 clangd 客户端
         if client.name == "clangd" then
+            -- 向 clangd 发送切换源文件/头文件的请求
             client.request(
                 "textDocument/switchSourceHeader",
                 { uri = uri },
                 function(err, result)
+                    -- 错误处理
                     if err then
                         vim.notify(err.message or tostring(err), vim.log.levels.ERROR)
                         return
                     end
+                    -- 如果有对应文件则打开，否则提示
                     if result then
                         vim.cmd("edit " .. vim.uri_to_fname(result))
                     else
@@ -157,6 +166,7 @@ local function switch_source_header()
         end
     end
 
+    -- 如果没有找到 clangd 客户端
     vim.notify("clangd not attached", vim.log.levels.WARN)
 end
 

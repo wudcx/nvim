@@ -505,8 +505,120 @@ M.opencode = {
             function()
                 require("opencode").toggle()
             end,
-            "Execute opencode toggle...",
+            "Toggle opencode",
         },
-    }
+        ["<leader>or"] = {
+            function()
+                return require("opencode").operator("@this ")
+            end,
+            "Add range to opencode",
+            opts = { expr = true },
+        },
+        ["<leader>ol"] = {
+            function()
+                return require("opencode").operator("@this ") .. "_"
+            end,
+            "Add line to opencode",
+            opts = { expr = true },
+        },
+        ["<PageUp>"] = {
+            function()
+                require("opencode").command("session.half.page.up")
+            end,
+            "Scroll opencode up",
+        },
+        ["<PageDown>"] = {
+            function()
+                require("opencode").command("session.half.page.down")
+            end,
+            "Scroll opencode down",
+        },
+    },
+    v = {
+        ["<leader>oa"] = {
+            function()
+                require("opencode").ask("@this: ", { submit = true })
+            end,
+            "Ask opencode...",
+        },
+        ["<leader>os"] = {
+            function()
+                require("opencode").select()
+            end,
+            "Execute opencode action...",
+        },
+        ["<leader>ot"] = {
+            function()
+                require("opencode").toggle()
+            end,
+            "Toggle opencode",
+        },
+        ["<leader>or"] = {
+            function()
+                return require("opencode").operator("@this ")
+            end,
+            "Add range to opencode",
+            opts = { expr = true },
+        },
+    },
+    t = {
+        ["<leader>oa"] = {
+            function()
+                require("opencode").ask("@this: ", { submit = true })
+            end,
+            "Ask opencode...",
+        },
+        ["<leader>os"] = {
+            function()
+                require("opencode").select()
+            end,
+            "Execute opencode action...",
+        },
+        ["<leader>ot"] = {
+            function()
+                require("opencode").toggle()
+            end,
+            "Toggle opencode",
+        },
+        ["<leader>or"] = {
+            function()
+                return require("opencode").operator("@this ")
+            end,
+            "Add range to opencode",
+            opts = { expr = true },
+        },
+        ["<PageUp>"] = {
+            function()
+                require("opencode").command("session.half.page.up")
+            end,
+            "Scroll opencode up",
+        },
+        ["<PageDown>"] = {
+            function()
+                require("opencode").command("session.half.page.down")
+            end,
+            "Scroll opencode down",
+        },
+    },
+    x = {
+        ["<leader>ot"] = {
+            function()
+                require("opencode").toggle()
+            end,
+            "Toggle opencode",
+        },
+        ["<PageUp>"] = {
+            function()
+                require("opencode").command("session.half.page.up")
+            end,
+            "Scroll opencode up",
+        },
+        ["<PageDown>"] = {
+            function()
+                require("opencode").command("session.half.page.down")
+            end,
+            "Scroll opencode down",
+        },
+    },
 }
 return M
