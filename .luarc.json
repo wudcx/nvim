@@ -10,7 +10,11 @@
       "/usr/share/nvim/runtime/lua",
       "/usr/share/nvim/runtime/lua/vim",
       "/usr/share/nvim/runtime/lua/vim/_meta",
-      "/home/wdc/.local/share/nvim/lazy"
+      "/home/wdc/.local/share/nvim/lazy",
+      "home/wdc/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+      "home/wdc/.local/share/nvim/site/pack/packer/start/nvim-treesitter/parser",
+      "home/wdc/.local/share/nvim/site/pack/packer/start/nvim-treesitter/parser/lua",
+            "${3rd}/luassert/library",
     ],
     "checkThirdParty": false
   }

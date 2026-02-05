@@ -245,6 +245,16 @@ M.blankline = {
     },
 }
 
+M.bufferline = {
+    plugin = true,
+    n = {
+        ["<C-Right>"] = { "<cmd> BufferLineCycleNext <CR>", "cycle next buffer" },
+        ["<C-Left>"] = { "<cmd> BufferLineCyclePrev <CR>", "cycle prev buffer" },
+        ["<leader>bb"] = { "<cmd> BufferLinePick <CR>", "pick buffer" },
+        ["<leader>bd"] = { "<cmd> BufferLinePickClose <CR>", "pick buffer and close" },
+    }
+}
+
 M.whichkey = {
     plugin = true,
 
@@ -480,19 +490,19 @@ M.opencode = {
     plugin = true,
     n = {
         ["<leader>oa"] = {
-            function ()
-                require("opencode").ask("@this: ", {submit = true})
+            function()
+                require("opencode").ask("@this: ", { submit = true })
             end,
             "Ask opencode...",
         },
         ["<leader>os"] = {
-            function ()
+            function()
                 require("opencode").select()
             end,
             "Execute opencode action...",
         },
         ["<leader>ot"] = {
-            function ()
+            function()
                 require("opencode").toggle()
             end,
             "Execute opencode toggle...",

@@ -79,6 +79,13 @@ vim.lsp.config("clangd", {
 
 vim.lsp.enable "clangd"
 
+vim.lsp.config("cmake", {
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
+})
+
+vim.lsp.enable("cmake")
+
 vim.lsp.config("lua_ls", {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
