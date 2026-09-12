@@ -111,3 +111,17 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.fn.winrestview(view)
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("TSFold", { clear = true }),
+  callback = function(args)
+    if vim.bo[args.buf].buftype ~= "" then
+      return
+    end
+    pcall(vim.treesitter.start, args.buf)
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.wo.foldenable = true
+    vim.wo.foldlevel = 99 -- 99=默认全部展开；想要打开即折叠改成 0
+  end,
+})

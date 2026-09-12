@@ -102,7 +102,7 @@ local default_plugins = {
             return require "plugins.configs.treesitter"
         end,
         config = function(_, opts)
-            require("nvim-treesitter").setup(opts)
+            require("nvim-treesitter.configs").setup(opts)
         end,
     },
     -- lsp stuff， 安装语言服务器、调试器和其他开发工具

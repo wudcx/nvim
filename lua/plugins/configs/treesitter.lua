@@ -1,19 +1,23 @@
 local options = {
-  ensure_installed = { 
-    "c", 
-    "cpp", 
-    "lua", 
+  ensure_installed = {
+    "c",
+    "cpp",
+    "lua",
     "python",
     "vim",
-    "lua",
     "html",
     "css",
+    "scss",
     "javascript",
     "typescript",
     "tsx",
-    "c",
+    "vue",
+    "svelte",
+    "astro",
+    "graphql",
     "markdown",
     "markdown_inline",
+    "json",
   },
 
   highlight = {
