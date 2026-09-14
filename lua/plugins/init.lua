@@ -348,6 +348,7 @@ local default_plugins = {
 
     {
         "NickvanDyke/opencode.nvim",
+        tag = "v0.8.0",
         lazy = false,
         init = function()
             require("core.utils").load_mappings "opencode"
