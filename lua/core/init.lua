@@ -4,7 +4,7 @@ local g = vim.g
 -------------------------------------- globals -----------------------------------------
 g.eol = true
 -------------------------------------- options ------------------------------------------
-opt.laststatus = 3 -- global statusline
+opt.laststatus = 2 -- global statusline
 opt.showmode = false
 
 opt.clipboard = "unnamedplus"

@@ -18,6 +18,8 @@ local options = {
     "markdown",
     "markdown_inline",
     "json",
+    "xml",
+    "yaml",
   },
 
   highlight = {
