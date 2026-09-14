@@ -92,7 +92,7 @@ local default_plugins = {
     -- tree sitter， 语法高亮
     {
         "nvim-treesitter/nvim-treesitter",
-        -- tag = "v0.10.0",
+        branch = "master",
         init = function()
             require("core.utils").lazy_load "nvim-treesitter"
         end,

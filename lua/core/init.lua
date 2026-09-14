@@ -118,7 +118,6 @@ vim.api.nvim_create_autocmd("FileType", {
     if vim.bo[args.buf].buftype ~= "" then
       return
     end
-    pcall(vim.treesitter.start, args.buf)
     vim.wo.foldmethod = "expr"
     vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     vim.wo.foldenable = true
